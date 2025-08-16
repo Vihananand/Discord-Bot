@@ -38,10 +38,61 @@ pip install discord.py google-genai python-dotenv
 ### 3. Create Discord Bot
 
 1. Go to [Discord Developer Portal](https://discord.com/developers/applications)
-2. Create a new application
-3. Go to "Bot" section and create a bot
-4. Copy the bot token
-5. Enable "Message Content Intent" in the bot settings
+
+## Docker Setup 🐳
+
+### 1. Create a Dockerfile
+
+Inside your Python folder (for example, `my_app`), create a file named `DockerFile` with the following content:
+
+```Dockerfile
+# Base image with Python
+FROM python:3.11-slim
+
+# Set working directory inside the container
+WORKDIR /app
+
+# Copy everything from your local folder into the container
+COPY . .
+
+# Install dependencies (if you have requirements.txt)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Default command to run your app
+CMD ["python", "main.py"]
+```
+
+Replace `main.py` with your actual entry script if different.
+
+### 2. Build the Docker image
+
+Run this from the same directory where your Dockerfile lives:
+
+```bash
+docker build -t <python-app-name> DockerFile .
+```
+
+### 3. Run it in the background (detached mode)
+
+```bash
+docker run -d --name <name-of-container> <python-app-name>
+```
+
+- `-d` → detached mode (background)
+- `--name <name-of-container>` → gives your container a name
+
+### 4. Verify it’s running
+
+```bash
+docker ps
+```
+
+1. Create a new application
+2. Go to "Bot" section and create a bot
+3. Copy the bot token
+4. Enable "Message Content Intent" in the bot settings
+
+---
 
 ### 4. Get Google AI API Key
 
